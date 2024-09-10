@@ -1,10 +1,11 @@
+#pragma once
 #include "basic_queue.h"
 #include <mutex>
 #include <queue>
 #include <condition_variable> 
 
 template<typename T>
-class std_queue_mutex : basic_queue<T> {
+class std_queue_with_mutex : public basic_queue<T> {
 private:
     mutable std::queue<T> m_queue;
     mutable std::mutex m_mutex;
