@@ -2,6 +2,7 @@
 #include <thread>
 #include "benchmark/benchmark.h"
 #include "queues/std_queue_with_mutex.hpp"
+#include "queues/lock_free_queue.hpp"
 
 using TestQueue = std_queue_with_mutex<int>;
 
@@ -39,6 +40,11 @@ static void BM_QueueTest(benchmark::State& state) {
 }
 BENCHMARK_TEMPLATE(BM_QueueTest, std_queue_with_mutex<int>)
     ->Name("std_queue_mutex")
+    ->ThreadRange(2, 64)
+    ->UseRealTime();
+
+BENCHMARK_TEMPLATE(BM_QueueTest, lock_free_queue<int>)
+    ->Name("lock_free_queue")
     ->ThreadRange(2, 64)
     ->UseRealTime();
 
